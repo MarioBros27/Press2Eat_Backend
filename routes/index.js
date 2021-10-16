@@ -11,6 +11,15 @@ router.get('/', function(req, res, next) {
 /* GET a list of all the customers */
 router.get('/customers', customerController.index);
 
+/* GET a given customer given their id */
+router.get('/customers/:id', customerController.show);
+
+/* POST a customer */
+router.post('/customers', customerController.create);
+
+/* PUT a customer */
+router.put('/customers/:id', customerController.update);
+
 /* GET a list of all the restaurants */
 router.get('/restaurants', restaurantController.index);
 
