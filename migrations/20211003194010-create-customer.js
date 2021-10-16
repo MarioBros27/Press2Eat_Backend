@@ -4,15 +4,14 @@ module.exports = {
     await queryInterface.createTable('Customers', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
-      first_name: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -20,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      external_id: {
+      externalId: {
         type: Sequelize.STRING,
         allowNull: false
       },
