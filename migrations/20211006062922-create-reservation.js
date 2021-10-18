@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.UUID,
       },
       restaurantId: {
+        allowNull: false,
         type: Sequelize.UUID,
         references: {
           model: 'Restaurants',
@@ -17,6 +18,7 @@ module.exports = {
         }
       },
       customerId: {
+        allowNull: false,
         type: Sequelize.UUID,
         references: {
           model: 'Customers',
@@ -24,12 +26,15 @@ module.exports = {
         }
       },
       appointment: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       seats: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       status: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
