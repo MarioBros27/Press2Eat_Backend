@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const customerController = require('../controllers/customer');
+const internalUserController = require('../controllers/internalUser');
+const itemController = require('../controllers/item');
 const reservationController = require('../controllers/reservation');
 const restaurantController = require('../controllers/restaurant');
-const internalUserController = require('../controllers/internalUser');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,6 +34,18 @@ router.post('/internalUsers', internalUserController.create);
 
 /* PUT an internal user */
 router.put('/internalUsers/:id', internalUserController.update);
+
+/* GET a list of all restaurant items */
+router.get('/restaurants/:restaurantId/items', itemController.index);
+
+/* GET a restaurant item given its id */
+router.get('/restaurants/:restaurantId/items/:id', itemController.show);
+
+/* POST a new restaurant item */
+router.post('/restaurants/:restaurantId/items', itemController.create);
+
+/* PUT an existing restaurant item */
+router.put('/restaurants/:restaurantId/items/:id', itemController.update);
 
 /* GET a list of all the reservations filtered by customer or restaurant */
 router.get('/reservations', reservationController.index);
