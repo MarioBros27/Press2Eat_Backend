@@ -3,6 +3,7 @@ var router = express.Router();
 const customerController = require('../controllers/customer');
 const reservationController = require('../controllers/reservation');
 const restaurantController = require('../controllers/restaurant');
+const internalUserController = require('../controllers/internalUser');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -20,6 +21,18 @@ router.post('/customers', customerController.create);
 
 /* PUT a customer */
 router.put('/customers/:id', customerController.update);
+
+/* GET a list of all the internal users */
+router.get('/internalUsers', internalUserController.index);
+
+/* GET an internal user given their id */
+router.get('/internalUsers/:id', internalUserController.show);
+
+/* POST an internal user */
+router.post('/internalUsers', internalUserController.create);
+
+/* PUT an internal user */
+router.put('/internalUsers/:id', internalUserController.update);
 
 /* GET a list of all the reservations filtered by customer or restaurant */
 router.get('/reservations', reservationController.index);
