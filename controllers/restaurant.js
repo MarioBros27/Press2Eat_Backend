@@ -15,7 +15,7 @@ module.exports = {
         if (data) res.send(data)
         else res.status(404).send({ message: "Cannot find the restaurant with the given id"});
       })
-      .catch(error => res.status(500).send(`Error retrieving the restaurant with the id: ${id}`))
+      .catch(_ => res.status(500).send({ message: `Error retrieving the restaurant with the id: ${id}` }))
   },
 
   create(req, res) {
@@ -26,9 +26,8 @@ module.exports = {
       })
       .catch((error) => {
         res.status(422).send({
-          message: error.message || "Some error ocurred while creating the restaurant"
+          message: error.message || "Some error occurred while creating the restaurant"
         })
-        return res;
       })
   },
 

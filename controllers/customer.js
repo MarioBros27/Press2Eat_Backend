@@ -25,7 +25,7 @@ module.exports = {
       .then((data) => res.status(201).send(data))
       .catch((error) => {
         res.status(422).send({
-          message: error.message || "Some error ocurred while creating the customer"
+          message: error.message || "Some error occurred while creating the customer"
         })
       })
   },
@@ -43,7 +43,7 @@ module.exports = {
       })
       .catch((error) => {
         res.status(422).send({
-          message: error.message || "Some error ocurred while updating the customer"
+          message: error.message || "Some error occurred while updating the customer"
         })
       })
   }
