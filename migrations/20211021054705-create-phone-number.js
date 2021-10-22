@@ -18,7 +18,7 @@ module.exports = {
       },
       number: {
         allowNull: false,
-        default: '',
+        defaultValue: '',
         type: Sequelize.STRING
       },
       createdAt: {

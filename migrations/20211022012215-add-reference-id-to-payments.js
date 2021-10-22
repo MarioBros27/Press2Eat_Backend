@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.addColumn('Payments', 'referenceId', {
       type: Sequelize.STRING,
       allowNull: false,
-      default: ''
+      defaultValue: ''
     });
     await queryInterface.renameColumn('Payments', 'paidDate', 'paymentDate');
   },

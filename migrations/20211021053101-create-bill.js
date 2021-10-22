@@ -14,17 +14,17 @@ module.exports = {
       },
       total: {
         allowNull: false,
-        default: 0.0,
+        defaultValue: 0.0,
         type: Sequelize.DOUBLE
       },
       tip: {
         allowNull: false,
-        default: 0.0,
+        defaultValue: 0.0,
         type: Sequelize.DOUBLE
       },
       done: {
         allowNull: false,
-        default: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {

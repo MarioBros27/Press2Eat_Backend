@@ -18,7 +18,7 @@ module.exports = {
       },
       clabe: {
         allowNull: false,
-        default: '',
+        defaultValue: '',
         type: Sequelize.STRING
       },
       createdAt: {

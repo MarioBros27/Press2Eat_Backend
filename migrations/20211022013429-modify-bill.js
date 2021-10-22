@@ -13,7 +13,7 @@ module.exports = {
     queryInterface.addColumn('Bills', 'tableNumber', {
       allowNull: false,
       type: Sequelize.INTEGER,
-      default: 0
+      defaultValue: 0
     });
   },
 
