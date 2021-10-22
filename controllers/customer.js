@@ -1,4 +1,3 @@
-const Sequelize = require('sequelize');
 const Customer = require('../models').Customer;
 
 module.exports = {
