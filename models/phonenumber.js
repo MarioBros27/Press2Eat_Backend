@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     number: {
       allowNull: false,
-      default: '',
+      defaultValue: '',
       type: DataTypes.STRING
     }
   }, {

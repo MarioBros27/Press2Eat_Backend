@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     clabe: {
       allowNull: false,
-      default: '',
+      defaultValue: '',
       type: DataTypes.STRING
     }
   }, {

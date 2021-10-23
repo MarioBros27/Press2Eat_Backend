@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Bill.belongsTo(models.Customer, { foreignKey: 'customerId' });
-      Bill.belongsToMany(models.Item, { through: models.ItemBill });
-      Bill.belongsToMany(models.Restaurant, { through: models.RestaurantBill });
+      Bill.belongsTo(models.Restaurant, { foreignKey: 'restaurantId' });
+      Bill.belongsToMany(models.Item, { through: models.ItemBill, foreignKey: 'billId' });
     }
   };
   Bill.init({
@@ -24,24 +24,32 @@ module.exports = (sequelize, DataTypes) => {
     },
     checkIn: {
       allowNull: false,
+      defaultValue: new Date(),
       type: DataTypes.DATE
     },
     total: {
-      type: DataTypes.DOUBLE
+      type: DataTypes.DOUBLE,
+      defaultValue: 0.0
     },
     tip: {
-      type: DataTypes.DOUBLE
+      type: DataTypes.DOUBLE,
+      defaultValue: 0.0
     },
     done: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     },
     customerId: {
       allowNull: false,
       type: DataTypes.UUID
     },
+    restaurantId: {
+      allowNull: false,
+      type: DataTypes.UUID
+    },
     tableNumber: {
       allowNull: false,
-      default: 0,
+      defaultValue: 0,
       type: DataTypes.INTEGER
     }
   }, {

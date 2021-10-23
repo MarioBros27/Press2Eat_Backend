@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     paid: {
       allowNull: false,
-      default: false,
+      defaultValue: false,
       type: DataTypes.BOOLEAN
     },
     paymentDate: {
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     referenceId: {
       allowNull: false,
-      default: '',
+      defaultValue: '',
       type: DataTypes.STRING
     }
   }, {

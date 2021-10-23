@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   ItemBill.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+    }, 
     itemId: DataTypes.UUID,
     billId: DataTypes.UUID
   }, {
