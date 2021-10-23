@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const billController = require('../controllers/bill');
 const customerController = require('../controllers/customer');
 const internalUserController = require('../controllers/internalUser');
 const itemController = require('../controllers/item');
@@ -10,6 +11,21 @@ const restaurantController = require('../controllers/restaurant');
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+/* GET a list of all the bills filtered by customer or restaurant */
+router.get('/bills', billController.index);
+
+/* GET a bill given its id */
+router.get('/bills/:id', billController.show);
+
+/* POST a bill */
+router.post('/bills', billController.create);
+
+/* PUT a bill */
+router.put('/bills/:id', billController.update);
+
+/* POST a collection of items associated to a bill */
+router.post('/bills/:id/addItems', billController.addItems);
 
 /* GET a list of all the customers */
 router.get('/customers', customerController.index);
