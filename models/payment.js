@@ -11,10 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Payment.belongsTo(models.Bill, { foreignKey: 'billId' });
+      Payment.belongsTo(models.Customer, { foreignKey: 'customerId' });
     }
   };
   Payment.init({
     billId: {
+      allowNull: false,
+      type: DataTypes.UUID
+    },
+    customerId: {
       allowNull: false,
       type: DataTypes.UUID
     },

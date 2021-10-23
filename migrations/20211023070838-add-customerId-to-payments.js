@@ -2,17 +2,17 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('Bills', 'restaurantId', {
+    await queryInterface.addColumn('Payments', 'customerId', {
       allowNull: false,
       type: Sequelize.UUID,
         references: {
-          model: 'Restaurants',
+          model: 'Customers',
           key: 'id'
         }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('Bills', 'restaurantId');
+    await queryInterface.removeColumn('Payments', 'customerId');
   }
 };
