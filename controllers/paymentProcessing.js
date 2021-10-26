@@ -1,50 +1,30 @@
 const { Stripe } = require('stripe');
 const { v4 } = require('uuid');
 
-const stripe = new Stripe('sk_test_51JoHBmKi9ZxKjuTBBSIFcmkJ9w6VcSoVpNVQBD082ToZTSJ1IyFCweAm7ORSKSJDlsouQimCqLGLxUrC5MRvU9Pu00dR3OspNE',  {
+const stripe = new Stripe('sk_test_51JoDVgBMpX7MLTCTYDehjyeT3yOj6W57YL6BWuowhC5ai7kJ2iOiYJmEGMhFqPZQVhVsysowXZMaJoMOrO9ZzL1T00pQ69sr5R',  {
   apiVersion: '2020-08-27',
 })
 
 module.exports = {
   async processPayment(req, res) {
-    const { email, product, authToken } = req.body;
-    const { token } = authToken;
-    const { card } = token;
 
-    console.log(card);
+    console.log(req.body.amount);
+    console.log(req.body.stripeAccount);
 
-    console.log("============================================== payment initiate =======================")
-
-    const userProduct = product;
-
-    const idempotencyKey = v4();
-
-    try {
-      const customer = await stripe.customers.create({
-        email: email,
-        source: token.id
+    try{
+      const _ = await stripe.paymentIntents.create({
+        payment_method_types: ['card'],
+        amount: req.body.amount,
+        currency: 'mxn',
+        application_fee_amount: 1,
+      }, {
+        stripeAccount: req.body.stripeAccount
       })
-
-      console.log('Customer created')
-      console.log(customer)
-      console.log(userProduct)
-
-      const response = await stripe.charges.create({
-        amount: userProduct.amount,
-        currency: "mxn",
-        customer: customer.id,
-        receipt_email: email,
-        description: userProduct.description
-      }, { idempotencyKey: idempotencyKey })
-
-      console.log("Charge response");
-      console.log(response);
-
-      res.json(response)
+        .then(response => res.status(200).send(response))
+        .catch(error => res.status(422).send({ message: `It was not possible to create the payment intent due to ${error}` }))
     }
-
     catch (err) {
-      console.log("=========================================== error ==========================")
+      console.log("======================= ERROR ==========================")
       console.log(err)
       res.json(err)
     }
