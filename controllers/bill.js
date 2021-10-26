@@ -71,7 +71,7 @@ module.exports = {
       }
     })
       .then(data => res.status(200).send(data[1]))
-      .catch(errror => {
+      .catch(error => {
         res.status(422).send({
           message: error.message || "Some error occurred while updating the bill"
         })

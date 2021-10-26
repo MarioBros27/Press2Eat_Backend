@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
+const bankAccountController = require('../controllers/bankAccount');
 const billController = require('../controllers/bill');
 const customerController = require('../controllers/customer');
 const internalUserController = require('../controllers/internalUser');
 const itemController = require('../controllers/item');
+const paymentController = require('../controllers/payments');
+const paymentProcessingController = require('../controllers/paymentProcessing');
 const reservationController = require('../controllers/reservation');
 const restaurantController = require('../controllers/restaurant');
 
@@ -50,6 +53,33 @@ router.post('/internalUsers', internalUserController.create);
 
 /* PUT an internal user */
 router.put('/internalUsers/:id', internalUserController.update);
+
+/* Process a payment */ 
+router.post('/processPayments', paymentProcessingController.processPayment);
+
+/* GET a list of all the payments filtered by bill or customer */
+router.get('/payments', paymentController.index);
+
+/* GET a payment */
+router.get('/payments/:id', paymentController.show);
+
+/* POST a payment */
+router.post('/payments', paymentController.create);
+
+/* PUT a payment */
+router.put('/payments/:id', paymentController.update);
+
+/* GET the bank accounts linked to a restaurant */
+router.get('/restaurants/:restaurantId/bankAccounts', bankAccountController.index);
+
+/* GET a bank account linked to a restaurant */
+router.get('/restaurants/:restaurantId/bankAccounts/:id', bankAccountController.show);
+
+/* POST a bank account linked to a restaurant */
+router.post('/restaurants/:restaurantId/bankAccounts', bankAccountController.create);
+
+/* PUT a bank account linked to a restaurant */
+router.put('/restaurants/:restaurantId/bankAccounts/:id', bankAccountController.update);
 
 /* GET a list of all restaurant items */
 router.get('/restaurants/:restaurantId/items', itemController.index);

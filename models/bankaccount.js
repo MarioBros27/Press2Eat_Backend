@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   BankAccount.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+    },
     restaurantId: {
       allowNull: false,
       type: DataTypes.UUID
