@@ -18,6 +18,21 @@ module.exports = {
       .catch(_ => res.status(500).send({ message: `Error retrieving the customer with the id: ${id}` }))
   },
 
+  getByExternalId(req, res) {
+    const externalId = req.params.id;
+
+    Customer.findOne({
+      where: { externalId: externalId }
+    })
+      .then(data => {
+        if (data) res.status(200).send(data)
+        else res.status(404).send({ message: "Cannot find the customer with the given external id" });
+      })
+      .catch(_ => {
+        res.status(500).send({ message: `Error retrieving the customer with the id: ${id}` })
+      });
+  },
+
   create(req, res) {
     const customer_attributes = req.body;
     Customer.create(customer_attributes)

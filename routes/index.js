@@ -39,6 +39,9 @@ router.get('/customers', customerController.index);
 /* GET a customer given their id */
 router.get('/customers/:id', customerController.show);
 
+/* GET a customer given their external id */
+router.get('/customers/externalId/:id', customerController.getByExternalId);
+
 /* POST a customer */
 router.post('/customers', customerController.create);
 
