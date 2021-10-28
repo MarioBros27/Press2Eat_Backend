@@ -30,6 +30,9 @@ router.put('/bills/:id', billController.update);
 /* POST a collection of items associated to a bill */
 router.post('/bills/:id/addItems', billController.addItems);
 
+/* PUT a given item associated to a bill */
+router.put('/bills/:id/updateItem/:itemId', billController.updateItem);
+
 /* GET a list of all the customers */
 router.get('/customers', customerController.index);
 

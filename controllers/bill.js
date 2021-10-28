@@ -80,7 +80,7 @@ module.exports = {
 
   addItems(req, res) {
     const id = req.params.id;
-    const itemIds = req.body.itemIds;
+    const items = req.body.items;
     var itemBills = [];
 
     Bill.findByPk(id)
@@ -89,8 +89,8 @@ module.exports = {
       })
       .catch(_ => res.status(500).send({ message: `Error retrieving the bill with the id ${id}`}))
 
-    itemIds.forEach(itemId => {
-      itemBills.push({ itemId: itemId, billId: id })
+    items.forEach(item => {
+      itemBills.push({ itemId: item.id, billId: id, quantity: item.quantity })
     });
 
     ItemBill.bulkCreate(itemBills)
@@ -98,7 +98,7 @@ module.exports = {
         Bill.findByPk(id, { 
           include: { 
             model: Item,
-            through: { attributes: [] }
+            through: { attributes: [ "quantity", "status"] }
           } 
         })
           .then(data => res.status(200).send(data))
@@ -108,5 +108,35 @@ module.exports = {
           message: error.message || "Some error ocurred while adding the items to the bill"
         })
       })
+  },
+
+  updateItem(req, res) {
+    const billId = req.params.id;
+    const itemId = req.params.itemId;
+
+    Bill.findByPk(billId)
+      .then(data => {
+        if (!data) res.status(404).send({ message: "Cannot find the bill with the given id"})
+      })
+      .catch(_ => res.status(500).send({ message: `Error retrieving the bill with the id ${billId}`}))
+
+
+    ItemBill.update(req.body, {
+      where: { billId: billId, itemId: itemId }
+    })
+      .then(_ => {
+        Bill.findByPk(billId, { 
+          include: { 
+            model: Item,
+            through: { attributes: [ "quantity", "status"] }
+          } 
+        })
+        .then(data => res.status(200).send(data))
+      })
+      .catch(error => {
+        res.status(422).send({
+          message: error.message || "Some error ocurred while updating  the items to the bill"
+        })
+      });
   }
 }

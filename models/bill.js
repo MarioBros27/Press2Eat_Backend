@@ -39,6 +39,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
+    paid: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    paymentTime: {
+      type: DataTypes.DATE
+    },
+    paymentReference: {
+      type: DataTypes.STRING
+    },
     customerId: {
       allowNull: false,
       type: DataTypes.UUID

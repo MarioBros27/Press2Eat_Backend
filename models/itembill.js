@@ -21,7 +21,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
     }, 
     itemId: DataTypes.UUID,
-    billId: DataTypes.UUID
+    billId: DataTypes.UUID,
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "pending"
+    }
   }, {
     sequelize,
     modelName: 'ItemBill',
