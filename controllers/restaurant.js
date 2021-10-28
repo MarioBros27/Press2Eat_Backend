@@ -17,6 +17,20 @@ module.exports = {
       })
       .catch(_ => res.status(500).send({ message: `Error retrieving the restaurant with the id: ${id}` }))
   },
+  getByExternalId(req, res) {
+    const externalId = req.params.id;
+
+    Restaurant.findOne({
+      where: { externalId: externalId }
+    })
+      .then(data => {
+        if (data) res.status(200).send(data)
+        else res.status(404).send({ message: "Cannot find the restaurant with the given external id" });
+      })
+      .catch(_ => {
+        res.status(500).send({ message: `Error retrieving the customer with the id: ${id}` })
+      });
+  },
 
   create(req, res) {
     const restaurant_attributes = req.body;

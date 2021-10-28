@@ -117,6 +117,9 @@ router.get('/restaurants', restaurantController.index);
 /* GET a restaurant given its id */
 router.get('/restaurants/:id', restaurantController.show);
 
+/* GET a restaurant given their external id */
+router.get('/restaurants/externalId/:id', restaurantController.getByExternalId);
+
 /* POST a restaurant */
 router.post('/restaurants', restaurantController.create);
 

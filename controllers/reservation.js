@@ -35,7 +35,7 @@ module.exports = {
       })
       .catch(_ => res.status(500).send({ message: `Error retrieving the reservation with the id: ${id}` }))
   },
-
+  
   create(req, res) {
     const reservation_attributes = req.body;
 

@@ -42,6 +42,12 @@ module.exports = (sequelize, DataTypes) => {
     internalNumber: {
       type: DataTypes.STRING
     },
+    phone1: {
+      type: DataTypes.STRING
+    },
+    phone2: {
+      type: DataTypes.STRING
+    },
     suburb: {
       allowNull: false,
       type: DataTypes.STRING
@@ -57,6 +63,10 @@ module.exports = (sequelize, DataTypes) => {
     accountId: {
       type: DataTypes.STRING,
       defaultValue: ""
+    },
+    externalId: {
+      allowNull: false,
+      type: DataTypes.STRING
     },
   }, {
     sequelize,

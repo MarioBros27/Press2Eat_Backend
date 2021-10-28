@@ -17,7 +17,7 @@ module.exports = {
       })
       .catch(_ => res.status(500).send({ message: `Error retrieving the customer with the id: ${id}` }))
   },
-
+//
   getByExternalId(req, res) {
     const externalId = req.params.id;
 
