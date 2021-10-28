@@ -9,6 +9,7 @@ module.exports = {
     const restaurantId = req.query.restaurantId;
     const customerId = req.query.customerId;
     const filters = {};
+    const isDone = req.query.isDone;
 
     filters.restaurantId = restaurantId ? { restaurantId: restaurantId } : {} 
     filters.customerId = customerId ? { customerId: customerId } : {}
@@ -20,7 +21,8 @@ module.exports = {
           filters.restaurantId,
           filters.customerId,
           filters.all
-        ]
+        ],
+        done: isDone
       },
       include: {
         model: Item,
