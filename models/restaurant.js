@@ -23,11 +23,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING
     },
+    description: {
+      type: DataTypes.STRING,
+      defaultValue: ""
+    },
     totalCapacity: {
       allowNull: false,
-      type: DataTypes.INTEGER
-    },
-    occupiedCapacity: {
       type: DataTypes.INTEGER
     },
     street: {
@@ -52,7 +53,11 @@ module.exports = (sequelize, DataTypes) => {
     state: {
       allowNull: false,
       type: DataTypes.STRING
-    }
+    },
+    accountId: {
+      type: DataTypes.STRING,
+      defaultValue: ""
+    },
   }, {
     sequelize,
     modelName: 'Restaurant',

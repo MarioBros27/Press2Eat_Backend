@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   PhoneNumber.init({
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUID4
+    },
     restaurantId: {
       allowNull: false,
       type: DataTypes.UUID
