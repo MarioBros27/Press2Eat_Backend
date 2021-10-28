@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const bankAccountController = require('../controllers/bankAccount');
+const phoneNumberController = require('../controllers/phoneNumber');
 const billController = require('../controllers/bill');
 const customerController = require('../controllers/customer');
 const internalUserController = require('../controllers/internalUser');
@@ -72,17 +72,17 @@ router.post('/payments', paymentController.create);
 /* PUT a payment */
 router.put('/payments/:id', paymentController.update);
 
-/* GET the bank accounts linked to a restaurant */
-router.get('/restaurants/:restaurantId/bankAccounts', bankAccountController.index);
+/* GET the phone numbers linked to a restaurant */
+router.get('/restaurants/:restaurantId/phoneNumbers', phoneNumberController.index);
 
-/* GET a bank account linked to a restaurant */
-router.get('/restaurants/:restaurantId/bankAccounts/:id', bankAccountController.show);
+/* GET a phone number linked to a restaurant */
+router.get('/restaurants/:restaurantId/phoneNumbers/:id', phoneNumberController.show);
 
-/* POST a bank account linked to a restaurant */
-router.post('/restaurants/:restaurantId/bankAccounts', bankAccountController.create);
+/* POST a phone number linked to a restaurant */
+router.post('/restaurants/:restaurantId/phoneNumbers', phoneNumberController.create);
 
-/* PUT a bank account linked to a restaurant */
-router.put('/restaurants/:restaurantId/bankAccounts/:id', bankAccountController.update);
+/* PUT a phone number linked to a restaurant */
+router.put('/restaurants/:restaurantId/phoneNumbers/:id', phoneNumberController.update);
 
 /* GET a list of all restaurant items */
 router.get('/restaurants/:restaurantId/items', itemController.index);
