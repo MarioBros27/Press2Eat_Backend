@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Bill.belongsTo(models.Customer, { foreignKey: 'customerId' });
       Bill.belongsTo(models.Restaurant, { foreignKey: 'restaurantId' });
       Bill.belongsToMany(models.Item, { through: models.ItemBill, foreignKey: 'billId' });
+
     }
   };
   Bill.init({

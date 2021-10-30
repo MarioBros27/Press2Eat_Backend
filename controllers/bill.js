@@ -3,6 +3,7 @@ const Bill = require('../models').Bill;
 const ItemBill = require('../models').ItemBill;
 const Item = require('../models').Item;
 const Restaurant = require('../models').Restaurant;
+const Customer = require('../models').Customer;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -24,7 +25,7 @@ module.exports = {
           filters.customerId,
           filters.all
         ],
-        done: isDone
+        // done: isDone
       },
       include: [
         {
@@ -35,6 +36,11 @@ module.exports = {
         {
           model: Restaurant,
           attributes: [ "name", "accountId" ]
+        },
+        {
+          model: Customer,
+          attributes: ["firstName","lastName"]
+          
         }
       ]
     })
@@ -116,9 +122,8 @@ module.exports = {
       .catch(_ => res.status(500).send({ message: `Error retrieving the bill with the id ${id}`}))
 
     items.forEach(item => {
-      itemBills.push({ itemId: item.id, billId: id, quantity: item.quantity })
+      itemBills.push({ itemId: item.id, billId: id, quantity: item.quantity,status: item.status })
     });
-
     ItemBill.bulkCreate(itemBills)
       .then(_ => {
         Bill.findByPk(id, { 
