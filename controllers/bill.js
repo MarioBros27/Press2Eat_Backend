@@ -99,9 +99,8 @@ module.exports = {
       .catch(_ => res.status(500).send({ message: `Error retrieving the bill with the id ${id}`}))
 
     items.forEach(item => {
-      itemBills.push({ itemId: item.id, billId: id, quantity: item.quantity })
+      itemBills.push({ itemId: item.id, billId: id, quantity: item.quantity,status: item.status })
     });
-
     ItemBill.bulkCreate(itemBills)
       .then(_ => {
         Bill.findByPk(id, { 
