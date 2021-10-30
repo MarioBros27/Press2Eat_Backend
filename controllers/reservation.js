@@ -1,5 +1,7 @@
 const Reservation = require('../models').Reservation;
 const Sequelize = require('sequelize');
+const Customer = require('../models').Customer;
+const Restaurant = require('../models').Restaurant;
 const Op = Sequelize.Op;
 
 module.exports = {
@@ -19,7 +21,17 @@ module.exports = {
           filters.restaurantId,
           filters.all
         ]
-      }
+      },
+      include: [{
+        model: Customer,
+        attributes: ["firstName","lastName"]
+        
+      },
+      {
+        model: Restaurant,
+        attributes: ["name"]
+        
+      }],
     })
       .then(data => res.status(200).send(data))
       .catch(error => res.status(400).send(error))
