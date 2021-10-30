@@ -1,6 +1,7 @@
 const Bill = require('../models').Bill;
 const ItemBill = require('../models').ItemBill;
 const Item = require('../models').Item;
+const Customer = require('../models').Customer;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -24,10 +25,16 @@ module.exports = {
         ],
         // done: isDone
       },
-      include: {
+      include: [{
         model: Item,
         through: { attributes: [] }
+      },
+      {
+        model: Customer,
+        attributes: ["firstName","lastName"]
+        
       }
+    ]
     })
       .then(data => res.status(200).send(data))
       .catch(error => res.status(400).send(error))
