@@ -22,7 +22,7 @@ module.exports = {
           filters.customerId,
           filters.all
         ],
-        done: isDone
+        // done: isDone
       },
       include: {
         model: Item,
