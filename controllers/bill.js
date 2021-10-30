@@ -1,6 +1,8 @@
+const { Stripe } = require('stripe');
 const Bill = require('../models').Bill;
 const ItemBill = require('../models').ItemBill;
 const Item = require('../models').Item;
+const Restaurant = require('../models').Restaurant;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -24,10 +26,17 @@ module.exports = {
         ],
         done: isDone
       },
-      include: {
-        model: Item,
-        through: { attributes: [] }
-      }
+      include: [
+        {
+          model: Item,
+          attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
+          through: { attributes: [ "quantity", "status"] }
+        },
+        {
+          model: Restaurant,
+          attributes: [ "name", "accountId" ]
+        }
+      ]
     })
       .then(data => res.status(200).send(data))
       .catch(error => res.status(400).send(error))
@@ -37,10 +46,17 @@ module.exports = {
     const id = req.params.id;
 
     Bill.findByPk(id, { 
-      include: { 
-        model: Item,
-        through: { attributes: [] }
-      } 
+      include: [
+        {
+          model: Item,
+          attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
+          through: { attributes: [ "quantity", "status"] }
+        },
+        {
+          model: Restaurant,
+          attributes: [ "name" ]
+        }
+      ]
     })
       .then(data => {
         if(data) res.status(200).send(data)
@@ -68,9 +84,17 @@ module.exports = {
       where: { id: id },
       returning: true,
       plain: true,
-      include: {
-        model: Item
-      }
+      include: [
+        {
+          model: Item,
+          attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
+          through: { attributes: [ "quantity", "status"] }
+        },
+        {
+          model: Restaurant,
+          attributes: [ "name" ]
+        }
+      ]
     })
       .then(data => res.status(200).send(data[1]))
       .catch(error => {
@@ -98,10 +122,17 @@ module.exports = {
     ItemBill.bulkCreate(itemBills)
       .then(_ => {
         Bill.findByPk(id, { 
-          include: { 
-            model: Item,
-            through: { attributes: [ "quantity", "status"] }
-          } 
+          include: [
+            {
+              model: Item,
+              attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
+              through: { attributes: [ "quantity", "status"] }
+            },
+            {
+              model: Restaurant,
+              attributes: [ "name" ]
+            }
+          ] 
         })
           .then(data => res.status(200).send(data))
       })
@@ -128,10 +159,17 @@ module.exports = {
     })
       .then(_ => {
         Bill.findByPk(billId, { 
-          include: { 
-            model: Item,
-            through: { attributes: [ "quantity", "status"] }
-          } 
+          include: [
+            {
+              model: Item,
+              attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
+              through: { attributes: [ "quantity", "status"] }
+            },
+            {
+              model: Restaurant,
+              attributes: [ "name" ]
+            }
+          ] 
         })
         .then(data => res.status(200).send(data))
       })
@@ -140,5 +178,38 @@ module.exports = {
           message: error.message || "Some error ocurred while updating  the items to the bill"
         })
       });
+  },
+
+  async calculateTotal(req, res) {
+    const id = req.params.id;
+
+    Bill.findByPk(id, { 
+      include: [
+        {
+          model: Item,
+          attributes: [ "price" ], 
+          through: { attributes: [ "quantity" ] }
+        }
+      ]
+    })
+      .then(bill => {
+        total = 0;
+        bill.Items.forEach(item => {
+          total = total + (item.price * item.ItemBill.quantity)  
+        })
+        Bill.update(
+          {
+            total: total + bill.tip
+          }, 
+          {
+            where: { id: id },
+            returning: true,
+            plain: true,
+          }
+        )
+          .then(updatedBill => res.status(200).send(updatedBill[1]))
+          .catch(error => res.status(422).send({ message: `There was an error computing the total of the bill. Error details: ${error}`}))
+      })
+      .catch(_ => res.status(500).send({ message: `Error retrieving the bill with the id: ${id}`}))
   }
 }

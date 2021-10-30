@@ -27,6 +27,9 @@ router.post('/bills', billController.create);
 /* PUT a bill */
 router.put('/bills/:id', billController.update);
 
+/* Create a payment intent for the bill */
+router.put('/bills/:id/calculateTotal', billController.calculateTotal);
+
 /* POST a collection of items associated to a bill */
 router.post('/bills/:id/addItems', billController.addItems);
 
@@ -61,7 +64,7 @@ router.post('/internalUsers', internalUserController.create);
 router.put('/internalUsers/:id', internalUserController.update);
 
 /* Process a payment */ 
-router.post('/processPayments', paymentProcessingController.processPayment);
+router.post('/processPayment', paymentProcessingController.processPayment);
 
 /* GET a list of all the payments filtered by bill or customer */
 router.get('/payments', paymentController.index);
