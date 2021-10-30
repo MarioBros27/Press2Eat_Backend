@@ -9,6 +9,7 @@ const paymentController = require('../controllers/payments');
 const paymentProcessingController = require('../controllers/paymentProcessing');
 const reservationController = require('../controllers/reservation');
 const restaurantController = require('../controllers/restaurant');
+const itemBillController = require('../controllers/itemBill');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -26,6 +27,18 @@ router.post('/bills', billController.create);
 
 /* PUT a bill */
 router.put('/bills/:id', billController.update);
+
+/* GET a list of all the itemBills filtered restaurant */
+router.get('/itemBills/byRestaurant', itemBillController.byRestaurant);
+
+/* GET a list of all the itemBills filtered customer */
+router.get('/itemBills/byCusstomer', itemBillController.byCustomer);
+
+// /* POST an itemBill */
+// router.post('/itemBills', itemBillController.create);
+
+/* PUT an itemBill */
+router.put('/itemBills/:id', itemBillController.update);
 
 /* POST a collection of items associated to a bill */
 router.post('/bills/:id/addItems', billController.addItems);
