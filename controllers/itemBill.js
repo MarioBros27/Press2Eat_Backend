@@ -64,7 +64,7 @@ module.exports = {
             // },
             include: [{
                 model: Bill,
-                attributes: ["restaurantId"],
+                attributes: ["restaurantId","tableNumber","checkIn"],
 
                 //   through: { attributes: [] }
                 where: {
