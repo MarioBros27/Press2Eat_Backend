@@ -2,6 +2,7 @@ const Bill = require('../models').Bill;
 const ItemBill = require('../models').ItemBill;
 const Sequelize = require('sequelize');
 const Customer = require('../models').Customer;
+const Item = require('../models').Item;
 
 const Op = Sequelize.Op;
 
@@ -74,6 +75,11 @@ module.exports = {
                     {
                         model: Customer,
                         attributes: ["firstName", "lastName"]
+
+                    },
+                    {
+                        model: Item,
+                        attributes: ["name"]
 
                     }
                 ]
