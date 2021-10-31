@@ -204,6 +204,7 @@ module.exports = {
         })
         Bill.update(
           {
+            done: true,
             total: total + bill.tip
           }, 
           {

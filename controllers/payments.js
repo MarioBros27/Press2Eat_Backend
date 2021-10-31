@@ -1,4 +1,6 @@
 const Payment = require('../models').Payment;
+const Bill = require('../models').Bill;
+const Restaurant = require('../models').Restaurant;
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -19,6 +21,14 @@ module.exports = {
           filters.billId,
           filters.all
         ]
+      },
+      include: {
+        model: Bill,
+        attributes: { exclude: [ "id", "checkIn", "tip", "done", "paid", "paymentTime", "paymentReference", "customerId", "restaurantId", "tableNumber", "createdAt", "updatedAt" ]},
+        include: {
+          model: Restaurant,
+          attributes: [ "name" ]
+        }
       }
     })
       .then(data => res.status(200).send(data))
@@ -40,7 +50,21 @@ module.exports = {
     const payment_attributes = req.body;
 
     Payment.create(payment_attributes)
-      .then(data => res.status(201).send(data))
+      .then(payment => {
+        Bill.update(
+          {
+          paid: true
+          },
+          {
+            where: {
+              id: payment_attributes.billId
+            }
+          }
+        )
+          .then(_ => res.status(201).send(payment))
+          .catch(error => res.status(422).send({ message: `There was an error updating the bill. Error details ${error}`}))
+        
+      })
       .catch(error => {
         res.status(422).send({
           message: error.message || "Some error occurred while creating the payment"
