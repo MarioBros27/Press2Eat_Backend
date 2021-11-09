@@ -9,26 +9,13 @@ const Op = Sequelize.Op;
 module.exports = {
     index(req, res) {
         const restaurantId = req.query.restaurantId;
-        const customerId = req.query.customerId;
-        const filters = {};
 
         filters.restaurantId = restaurantId ? { restaurantId: restaurantId } : {}
-        filters.customerId = customerId ? { customerId: customerId } : {}
-        filters.all = !(restaurantId || customerId) ? { id: { [Op.not]: null } } : {}
 
         ItemBill.findAll({
-            // where: {
-            //   [Op.or]: [
-            //     filters.restaurantId,
-            //     filters.customerId,
-            //     filters.all
-            //   ],
-            // },
             include: [{
                 model: Bill,
                 attributes: ["restaurantId"],
-
-                //   through: { attributes: [] }
                 where: {
                     restaurantId: restaurantId
                 },
@@ -48,26 +35,14 @@ module.exports = {
 
     byRestaurant(req, res) {
         const restaurantId = req.query.restaurantId;
-        const customerId = req.query.customerId;
-        const filters = {};
 
         filters.restaurantId = restaurantId ? { restaurantId: restaurantId } : {}
-        filters.customerId = customerId ? { customerId: customerId } : {}
-        filters.all = !(restaurantId || customerId) ? { id: { [Op.not]: null } } : {}
 
         ItemBill.findAll({
-            // where: {
-            //   [Op.or]: [
-            //     filters.restaurantId,
-            //     filters.customerId,
-            //     filters.all
-            //   ],
-            // },
             include: [{
                 model: Bill,
                 attributes: ["restaurantId","tableNumber","checkIn","done"],
 
-                //   through: { attributes: [] }
                 where: {
                     restaurantId: restaurantId
                 },

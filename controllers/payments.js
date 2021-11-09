@@ -53,7 +53,9 @@ module.exports = {
       .then(payment => {
         Bill.update(
           {
-          paid: true
+            paid: true,
+            paymentTime: payment_attributes.paymentDate,
+            paymentReference: payment_attributes.referenceId
           },
           {
             where: {

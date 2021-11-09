@@ -31,7 +31,7 @@ module.exports = {
         {
           model: Item,
           attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
-          through: { attributes: [ "quantity", "status"] }
+          through: { attributes: [ "id", "quantity", "status"] }
         },
         {
           model: Restaurant,
