@@ -25,13 +25,12 @@ module.exports = {
           filters.customerId,
           filters.all
         ],
-        // done: isDone
       },
       include: [
         {
           model: Item,
           attributes: [ "id", "restaurantId", "name", "description", "brand", "type", "price" ], 
-          through: { attributes: [ "quantity", "status"] }
+          through: { attributes: [ "quantity", "status","id"] }
         },
         {
           model: Restaurant,

@@ -17,18 +17,11 @@ module.exports = {
         filters.all = !(restaurantId || customerId) ? { id: { [Op.not]: null } } : {}
 
         ItemBill.findAll({
-            // where: {
-            //   [Op.or]: [
-            //     filters.restaurantId,
-            //     filters.customerId,
-            //     filters.all
-            //   ],
-            // },
+
             include: [{
                 model: Bill,
                 attributes: ["restaurantId"],
 
-                //   through: { attributes: [] }
                 where: {
                     restaurantId: restaurantId
                 },
@@ -56,18 +49,9 @@ module.exports = {
         filters.all = !(restaurantId || customerId) ? { id: { [Op.not]: null } } : {}
 
         ItemBill.findAll({
-            // where: {
-            //   [Op.or]: [
-            //     filters.restaurantId,
-            //     filters.customerId,
-            //     filters.all
-            //   ],
-            // },
             include: [{
                 model: Bill,
                 attributes: ["restaurantId","tableNumber","checkIn","done"],
-
-                //   through: { attributes: [] }
                 where: {
                     restaurantId: restaurantId
                 },
