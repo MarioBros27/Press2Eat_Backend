@@ -11,21 +11,22 @@ module.exports = {
   index(req, res) {
     const restaurantId = req.query.restaurantId;
     const customerId = req.query.customerId;
+    var isDone = req.query.isDone;
     const filters = {};
-    const isDone = req.query.isDone;
 
     filters.restaurantId = restaurantId ? { restaurantId: restaurantId } : {} 
     filters.customerId = customerId ? { customerId: customerId } : {}
-    filters.all = !(restaurantId || customerId) ? { id: { [Op.not]: null } } : { }
+    filters.all = !(restaurantId || customerId) ? { id: { [Op.not]: null } } : {}
+    isDone = isDone != undefined ? isDone : [ true, false ]
 
     Bill.findAll({
       where: {
+        done: isDone,
         [Op.or]: [
           filters.restaurantId,
           filters.customerId,
           filters.all
-        ],
-        // done: isDone
+        ]
       },
       include: [
         {
@@ -40,11 +41,12 @@ module.exports = {
         {
           model: Customer,
           attributes: ["firstName","lastName"]
-          
         }
       ]
     })
-      .then(data => res.status(200).send(data))
+      .then(data => {
+        res.status(200).send(data)
+      })
       .catch(error => res.status(400).send(error))
   },
 
