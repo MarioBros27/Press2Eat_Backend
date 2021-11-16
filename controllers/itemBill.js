@@ -42,7 +42,6 @@ module.exports = {
             include: [{
                 model: Bill,
                 attributes: ["restaurantId","tableNumber","checkIn","done"],
-
                 where: {
                     restaurantId: restaurantId
                 },
